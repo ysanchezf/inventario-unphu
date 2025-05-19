@@ -1,0 +1,105 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Usuario {
+  id             Int         @id @default(autoincrement())
+  matricula      String      @unique
+  email          String      @unique
+  nombre         String
+  apellido       String
+  password       String
+  confirmed      Boolean     @default(false)
+  rol            Rol         @default(USER)
+  solicitudes    Solicitud[]
+  auditLogs      AuditLog[]  // Relación inversa para logs de este usuario
+
+  // Campos para asignar departamento
+  departamentoId Int?        // ← añadido
+  departamento   Departamento? @relation(fields: [departamentoId], references: [id]) // ← añadido
+
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+enum Rol {
+  ADMIN
+  USER
+}
+
+model Departamento {
+  id          Int       @id @default(autoincrement())
+  nombre      String    @unique
+  descripcion String?
+  items       Item[]
+  
+  // Relación inversa para usuarios asignados
+  usuarios    Usuario[] // ← añadido
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Item {
+  id                 Int          @id @default(autoincrement())
+  nombre             String
+  descripcion        String?
+  departamentoId     Int
+  cantidadTotal      Int
+  cantidadDisponible Int
+  estado             Estado       @default(AVAILABLE)
+  departamento       Departamento @relation(fields: [departamentoId], references: [id])
+  solicitudes        Solicitud[]
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+}
+
+enum Estado {
+  AVAILABLE
+  OUT_OF_STOCK
+  MAINTENANCE
+}
+
+model Solicitud {
+  id             Int             @id @default(autoincrement())
+  usuarioId      Int
+  itemId         Int
+  fechaSolicitud DateTime        @default(now())
+  fechaUso       DateTime
+  horaInicio     DateTime
+  horaFin        DateTime
+  motivo         String
+  estado         EstadoSolicitud @default(PENDIENTE)
+  comentarios    String?
+  usuario        Usuario         @relation(fields: [usuarioId], references: [id])
+  item           Item            @relation(fields: [itemId], references: [id])
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  deleted        Boolean         @default(false)
+  deletedAt      DateTime? 
+}
+
+enum EstadoSolicitud {
+  PENDIENTE
+  APROBADA
+  RECHAZADA
+  FINALIZADA
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  action    String
+  entity    String // p.ej. "Solicitud", "Item", "Departamento", etc.
+  entityId  Int
+  timestamp DateTime @default(now())
+  changes   Json?
+  user      Usuario  @relation(fields: [userId], references: [id])
+
+  @@index([entity, entityId])
+}

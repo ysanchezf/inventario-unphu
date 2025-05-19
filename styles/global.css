@@ -1,0 +1,309 @@
+/* styles/global.css */
+
+/* 1) RESET BÁSICO */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: initial;
+  padding: 0;
+}
+
+/* 2) VARIABLES DE COLOR */
+:root {
+  --bg: #f5f5f5;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --primary: #165C4F;
+  --accent: #16A085;
+  --white: #ffffff;
+  --muted: #777777;
+  --border: #e5e7eb;
+  --input-border: #ccc;
+  --radius: 0.75rem;
+  --shadow-light: rgba(0,0,0,0.05);
+  --shadow-strong: rgba(0,0,0,0.15);
+}
+
+/* 3) TIPOGRAFÍA Y FONDO */
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  line-height: 1.9;
+}
+
+/* 4) CONTENEDOR CENTRAL */
+.app-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* 5) HEADER & FOOTER */
+header,
+footer {
+  background: var(--primary);
+  color: var(--white);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header .app-container,
+footer .app-container {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+}
+
+/* Logo */
+.nav-link--logo,
+.logo {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--white);
+  text-decoration: none;
+}
+
+/* Navegación centrada */
+header nav,
+.nav-list {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
+}
+.nav-link {
+  color: var(--white);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-link:hover,
+.nav-link.active {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Sesión */
+.session-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.btn-logout {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--white);
+  background: transparent;
+  color: var(--white);
+  border-radius: var(--radius);
+  transition: background 0.2s, color 0.2s;
+}
+.btn-logout:hover {
+  background: var(--white);
+  color: var(--primary);
+}
+
+/* 6) BOTONES */
+.button,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+  text-decoration: none;
+}
+.button.primary,
+.btn-primary {
+  background: var(--accent);
+  color: var(--white);
+  border: none;
+  box-shadow: 0 4px 12px var(--shadow-light);
+}
+.button.primary:hover,
+.btn-primary:hover {
+  box-shadow: 0 6px 18px var(--shadow-strong);
+  transform: translateY(-4px) scale(1.02);
+}
+.button.secondary,
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+.button.secondary:hover,
+.btn-secondary:hover {
+  background: var(--accent);
+  color: var(--white);
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* 7) HERO */
+.hero {
+  background: var(--surface);
+  text-align: center;
+  padding: 4rem 1rem;
+}
+.hero h2 {
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+.hero p {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: var(--muted);
+  text-align: justify;
+  text-justify: inter-word;
+}
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* 8) FEATURES / CARDS */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 8rem;
+}
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px var(--shadow-light);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px var(--shadow-strong);
+}
+.card h4,
+.card-title {
+  font-size: 1.25rem;
+  color: var(--primary);
+  margin: 1rem 0 0.5rem;
+}
+.card p {
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* 9) TABLAS */
+.table-minimal {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.75rem;
+  margin-top: 1.5rem;
+}
+.table-minimal th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+  border-bottom: 2px solid var(--primary);
+}
+.table-minimal td {
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+.table-minimal tr:hover td {
+  background: #f9fafb;
+}
+.table-minimal button {
+  background: var(--accent);
+  color: var(--white);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.table-minimal button:hover {
+  background: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* 10) MODALES & FORMULARIOS */
+.modal-overlay {
+  background: rgba(0,0,0,0.4);
+}
+.modal-card,
+.form-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px var(--shadow-light);
+  padding: 2rem;
+  max-width: 400px;
+  margin: auto;
+}
+.modal-body .input,
+.modal-body select,
+.modal-body textarea,
+input,
+select,
+textarea {
+  width: 100%;
+  margin-bottom: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius);
+  padding: 0.6rem;
+}
+
+/* 11) PÁGINA DE REGISTRO */
+.register-page {
+  background: #eaf6f1;
+  min-height: calc(100vh - 0px);
+  justify-content: center;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+.register-page .form-card {
+  padding: 2.5rem;
+}
+.register-page h2 {
+  font-size: 1.75rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+.register-page .subheading {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+/* 12) RESPONSIVE */
+@media (max-width: 768px) {
+  header .app-container,
+  .features,
+  .table-minimal,
+  .register-page {
+    padding: 1rem;
+  }
+  header .app-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
